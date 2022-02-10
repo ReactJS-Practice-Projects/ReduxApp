@@ -16,8 +16,6 @@ const counterReducer = (state = { counter: 0 }, action) => {
   return state;
 };
 
-//now we point our store to the reducer function. We create redux store. 
-//we do it so that components of our App can dispatch and listern actions 
 const store = createStore(counterReducer);
 
 export default store;
