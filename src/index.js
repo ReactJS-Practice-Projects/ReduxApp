@@ -7,6 +7,7 @@ import App from './App';
 import store from './store/index';
 
 ReactDOM.render(
+  //here we provide redux store to all components
   <Provider store={store}>
     <App />
   </Provider>,
