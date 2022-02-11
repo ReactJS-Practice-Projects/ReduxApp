@@ -38,6 +38,7 @@ const authSlice = createSlice({
   },
 });
 
+//here we use auth as identifier for authSlice and then use auth in the App component
 const store = configureStore({
   reducer: { counter: counterSlice.reducer, auth: authSlice.reducer },
 });
