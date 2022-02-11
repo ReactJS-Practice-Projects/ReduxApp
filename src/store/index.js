@@ -1,39 +1,47 @@
-import { createStore } from 'redux';
+import { createSlice, configureStore } from '@reduxjs/toolkit';
 
 const initialState = { counter: 0, showCounter: true };
 
-const counterReducer = (state = initialState, action) => {
-  if (action.type === 'increment') {
-    return {
-      counter: state.counter + 1,
-      showCounter: state.showCounter
-    };
+//we pass object to the createSlice with predefined parameters 
+//name - name of the slice, initialState, reducers
+//with this toolkit we can manipulate states directly
+const counterSlice = createSlice({
+  name: 'counter',
+  initialState,
+  reducers: {
+    increment(state) {
+      state.counter++;
+    },
+    decrement(state) {
+      state.counter--;
+    },
+    //here we use reserved word payload to get access to input parameter
+    increase(state, action) {
+      state.counter = state.counter + action.payload;
+    },
+    toggleCounter(state) {
+      state.showCounter = !state.showCounter;
+    }
   }
+});
 
-  if (action.type === 'increase') {
-    return {
-      counter: state.counter + action.amount,
-      showCounter: state.showCounter
-    };
-  }
 
-  if (action.type === 'decrement') {
-    return {
-      counter: state.counter - 1,
-      showCounter: state.showCounter
-    };
-  }
+//configureStore is the tool that allows to pass multiple reducers to this function
+//bigger application can have many reducers and as result of it we use configureStore tool 
+//configureStore takes object as an input parameter. 
+//If we want to pass multiple reducers then we pass map of reducers and variables. 
+//configureStore with multiple reducers will look like this
+/*
+const store = configureStore({
+  reducer: { counter: counterSlice.reducer } 
+});
+*/
 
-  if (action.type === 'toggle') {
-    return {
-      showCounter: !state.showCounter,
-      counter: state.counter
-    };
-  }
+const store = configureStore({
+  reducer: counterSlice.reducer
+});
 
-  return state;
-};
-
-const store = createStore(counterReducer);
+//here we also need to export counter actions in order to use them in other components
+export const counterActions = counterSlice.actions;
 
 export default store;
